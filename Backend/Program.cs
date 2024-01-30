@@ -35,20 +35,19 @@ public class Program
         );
 
         builder.Services.AddAuthentication().AddJwtBearer(
-                    options =>
-                    {
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidateIssuerSigningKey = true,
-                            ValidateAudience = false,
-                            ValidateIssuer = false,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                                builder.Configuration.GetSection("Secret").Value!
-                            ))
-                        };
-                    }
-                );
-
+            options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                        builder.Configuration.GetSection("Secret").Value!
+                    ))
+                };
+            }
+        );
 
         var app = builder.Build();
 
