@@ -7,10 +7,12 @@ public abstract class TaskDto
 {
     [Required]
     [MaxLength(255)]
+    [MinLength(1)]
     public string Title { get; set; }
 
     [Required]
     [MaxLength(1024)]
+    [MinLength(1)]
     public string Description { get; set; }
 
 
