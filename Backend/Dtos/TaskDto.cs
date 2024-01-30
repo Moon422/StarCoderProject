@@ -15,14 +15,18 @@ public abstract class TaskDto
 
     [Required]
     public TaskStatus TaskStatus { get; set; }
-
-    [Required]
-    public int ProfileId { get; set; }
 }
 
 public class ReadTaskDto : TaskDto
 {
     public int Id { get; set; }
+    public int ProfileId { get; set; }
 }
 
-public class CreateTaskDto : TaskDto { }
+public class CreateTaskDto : TaskDto
+{
+    [Required]
+    public int ProfileId { get; set; }
+}
+
+public class UpdateTaskDto : TaskDto { }
