@@ -124,6 +124,7 @@ public class AuthService : IAuthService
 
         return new LoginResponseDto()
         {
+            ProfileId = profile.Id,
             Firstname = profile.Firstname,
             Lastname = profile.Lastname,
             Email = profile.Email,
@@ -157,6 +158,7 @@ public class AuthService : IAuthService
 
                 return new LoginResponseDto()
                 {
+                    ProfileId = profile.Id,
                     Firstname = profile.Firstname,
                     Lastname = profile.Lastname,
                     Email = profile.Email,
@@ -212,6 +214,7 @@ public class AuthService : IAuthService
 
                     return new LoginResponseDto()
                     {
+                        ProfileId = profile.Id,
                         Firstname = profile.Firstname,
                         Lastname = profile.Lastname,
                         Email = profile.Email,

@@ -13,14 +13,14 @@ public abstract class TaskDto
     [MaxLength(1024)]
     public string Description { get; set; }
 
-    [Required]
-    public TaskStatus TaskStatus { get; set; }
+
 }
 
 public class ReadTaskDto : TaskDto
 {
     public int Id { get; set; }
     public int ProfileId { get; set; }
+    public TaskStatus TaskStatus { get; set; }
 }
 
 public class CreateTaskDto : TaskDto
@@ -29,4 +29,8 @@ public class CreateTaskDto : TaskDto
     public int ProfileId { get; set; }
 }
 
-public class UpdateTaskDto : TaskDto { }
+public class UpdateTaskDto : TaskDto
+{
+    [Required]
+    public TaskStatus TaskStatus { get; set; }
+}
