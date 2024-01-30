@@ -8,17 +8,15 @@ public class PasswordValidatorAttribute : ValidationAttribute
     private readonly int minLength;
     private readonly int maxLength;
     private readonly bool digit;
-    private readonly bool alpha;
     private readonly bool uppercase;
     private readonly bool lowercase;
     private readonly bool symbol;
 
-    public PasswordValidatorAttribute(int minLength = 8, int maxLength = 20, bool digit = true, bool alpha = true, bool uppercase = true, bool lowercase = true, bool symbol = true)
+    public PasswordValidatorAttribute(int minLength = 8, int maxLength = 20, bool digit = true, bool uppercase = true, bool lowercase = true, bool symbol = true)
     {
         this.minLength = minLength;
         this.maxLength = maxLength;
         this.digit = digit;
-        this.alpha = alpha;
         this.uppercase = uppercase;
         this.lowercase = lowercase;
         this.symbol = symbol;
@@ -29,7 +27,8 @@ public class PasswordValidatorAttribute : ValidationAttribute
         string password = (string)value;
 
         string digitPattern = @"\d";
-        string alphaPattern = @"[a-zA-Z]";
+        string upperPattern = @"[A-Z]";
+        string lowerPattern = @"[a-z]";
         string symbolPattern = @"[$#@!^&]";
 
         if (password.Length < minLength)
@@ -44,9 +43,13 @@ public class PasswordValidatorAttribute : ValidationAttribute
         {
             return new ValidationResult($"Password must contain at least one digit");
         }
-        else if (alpha && !new Regex(alphaPattern).IsMatch(password))
+        else if (uppercase && !new Regex(upperPattern).IsMatch(password))
         {
-            return new ValidationResult($"Password must contain at least one alphabet");
+            return new ValidationResult($"Password must contain at least one uppercase alphabet");
+        }
+        else if (lowercase && !new Regex(lowerPattern).IsMatch(password))
+        {
+            return new ValidationResult($"Password must contain at least one lowercase alphabet");
         }
         else if (symbol && !new Regex(symbolPattern).IsMatch(password))
         {
