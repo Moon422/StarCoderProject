@@ -26,10 +26,7 @@ public class ReadTaskDto : TaskDto
 }
 
 public class CreateTaskDto : TaskDto
-{
-    [Required]
-    public int ProfileId { get; set; }
-}
+{ }
 
 public class UpdateTaskDto : TaskDto
 {
