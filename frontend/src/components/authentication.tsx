@@ -42,6 +42,7 @@ const Login: React.FC<LoginProps> = ({ switchRegister, authenticationSuccessful 
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/login`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json'
             },
@@ -107,6 +108,7 @@ const Register: React.FC<RegisterProps> = ({ switchLogin, authenticationSuccessf
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/register`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json'
             },

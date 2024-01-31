@@ -32,6 +32,7 @@ const TaskListItem: React.FC<TaskListItemProps> = ({ task, first, last, user, ta
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/${task.id}`, {
             method: 'PUT',
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json',
                 'authorization': `bearer ${user.jwtToken}`
@@ -55,6 +56,7 @@ const TaskListItem: React.FC<TaskListItemProps> = ({ task, first, last, user, ta
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/${task.id}`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json',
                 'authorization': `bearer ${user.jwtToken}`

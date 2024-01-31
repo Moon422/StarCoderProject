@@ -13,6 +13,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/api/tasks`, {
             method: 'GET',
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json',
                 'authorization': `bearer ${user.jwtToken}`
@@ -56,6 +57,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json',
                 'authorization': `bearer ${user.jwtToken}`
