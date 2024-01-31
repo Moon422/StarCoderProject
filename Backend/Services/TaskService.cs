@@ -13,9 +13,9 @@ namespace Backend.Services;
 public interface ITaskService
 {
     Task<ReadTaskDto> CreateTask(CreateTaskDto createTaskDto);
-    Task<List<ReadTaskDto>> GetAllTasks();
-    Task<ReadTaskDto> UpdateTask(int taskId, UpdateTaskDto updateTaskDto);
-    Task DeleteTask(int taskId);
+    Task<List<ReadTaskDto>> GetAllTasks(bool adminAccess = false);
+    Task<ReadTaskDto> UpdateTask(int taskId, UpdateTaskDto updateTaskDto, bool adminAccess = false);
+    Task DeleteTask(int taskId, bool adminAccess = false);
 }
 
 public class TaskService : ITaskService
@@ -56,19 +56,35 @@ public class TaskService : ITaskService
         };
     }
 
-    public async Task<List<ReadTaskDto>> GetAllTasks()
+    public async Task<List<ReadTaskDto>> GetAllTasks(bool adminAccess = false)
     {
-        var email = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-        var profile = await dbcontext.Profiles.FirstOrDefaultAsync(p => p.Email == email);
+        if (adminAccess)
+        {
+            return await dbcontext.Tasks.Select(t => t.ToReadDto()).ToListAsync();
+        }
+        else
+        {
+            var email = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            var profile = await dbcontext.Profiles.FirstOrDefaultAsync(p => p.Email == email);
 
-        return await dbcontext.Tasks.Where(t => t.Profile == profile).Select(t => t.ToReadDto()).ToListAsync();
+            return await dbcontext.Tasks.Where(t => t.Profile == profile).Select(t => t.ToReadDto()).ToListAsync();
+        }
     }
 
-    public async Task DeleteTask(int taskId)
+    public async Task DeleteTask(int taskId, bool adminAccess = false)
     {
-        var email = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-        var profile = await dbcontext.Profiles.FirstOrDefaultAsync(p => p.Email == email);
-        var task = await dbcontext.Tasks.FirstOrDefaultAsync(t => t.Id == taskId && t.Profile == profile);
+        TaskModel task = null;
+
+        if (adminAccess)
+        {
+            task = await dbcontext.Tasks.FirstOrDefaultAsync(t => t.Id == taskId);
+        }
+        else
+        {
+            var email = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            var profile = await dbcontext.Profiles.FirstOrDefaultAsync(p => p.Email == email);
+            task = await dbcontext.Tasks.FirstOrDefaultAsync(t => t.Id == taskId && t.Profile == profile);
+        }
 
         if (task is not null)
         {
@@ -81,11 +97,20 @@ public class TaskService : ITaskService
         }
     }
 
-    public async Task<ReadTaskDto> UpdateTask(int taskId, UpdateTaskDto updateTaskDto)
+    public async Task<ReadTaskDto> UpdateTask(int taskId, UpdateTaskDto updateTaskDto, bool adminAccess = false)
     {
-        var email = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-        var profile = await dbcontext.Profiles.FirstOrDefaultAsync(p => p.Email == email);
-        var task = await dbcontext.Tasks.FirstOrDefaultAsync(t => t.Id == taskId && t.Profile == profile);
+        TaskModel task = null;
+
+        if (adminAccess)
+        {
+            task = await dbcontext.Tasks.FirstOrDefaultAsync(t => t.Id == taskId);
+        }
+        else
+        {
+            var email = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            var profile = await dbcontext.Profiles.FirstOrDefaultAsync(p => p.Email == email);
+            task = await dbcontext.Tasks.FirstOrDefaultAsync(t => t.Id == taskId && t.Profile == profile);
+        }
 
         if (task is not null)
         {
