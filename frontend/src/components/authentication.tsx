@@ -18,11 +18,14 @@ interface RegisterProps {
 const AuthenticationView: React.FC<AuthenticationViewProps> = ({ authenticationSuccessful }) => {
     const [showLogin, setShowLogin] = useState(true);
 
-    if (showLogin) {
-        return <Login switchRegister={() => setShowLogin(false)} authenticationSuccessful={authenticationSuccessful} />
-    } else {
-        return <Register switchLogin={() => setShowLogin(true)} authenticationSuccessful={authenticationSuccessful} />
-    }
+    return (
+        <div className='h-full flex items-center'>
+            {
+                showLogin ? <Login switchRegister={() => setShowLogin(false)} authenticationSuccessful={authenticationSuccessful} /> :
+                    <Register switchLogin={() => setShowLogin(true)} authenticationSuccessful={authenticationSuccessful} />
+            }
+        </div>
+    )
 }
 
 const Login: React.FC<LoginProps> = ({ switchRegister, authenticationSuccessful }) => {
@@ -59,7 +62,7 @@ const Login: React.FC<LoginProps> = ({ switchRegister, authenticationSuccessful 
     }
 
     return (
-        <form className='p-10 border rounded-xl shadow w-2/5 mx-auto my-20' onSubmit={e => onLoginFormSubmit(e)}>
+        <form className='p-10 border rounded-xl shadow w-2/5 mx-auto my-auto' onSubmit={e => onLoginFormSubmit(e)}>
             <h3 className='text-center text-4975bc'>Login to Starcoder</h3>
             <h1 className='text-center text-292f7b'>Demo Project</h1>
             <hr className='mb-16' />
@@ -124,7 +127,7 @@ const Register: React.FC<RegisterProps> = ({ switchLogin, authenticationSuccessf
     }
 
     return (
-        <form className='p-10 border rounded-xl shadow w-2/5 mx-auto my-20' onSubmit={e => onRegistrationFormSubmit(e)}>
+        <form className='p-10 border rounded-xl shadow w-2/5 mx-auto my-auto' onSubmit={e => onRegistrationFormSubmit(e)}>
             <h3 className='text-center text-4975bc'>Register to Starcoder</h3>
             <h1 className='text-center text-292f7b'>Demo Project</h1>
             <hr className='mb-16' />

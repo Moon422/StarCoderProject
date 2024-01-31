@@ -15,7 +15,7 @@ function App() {
   }
 
   return (
-    <>
+    <div className='h-screen flex flex-col'>
       <nav className='h-20 flex justify-between items-center px-4 bg-bs-color'>
         <div className="h-12">
           <img src={logo} alt="BS Logo" className='h-full' />
@@ -31,18 +31,17 @@ function App() {
             }
           </button> : <button onClick={() => setShowLogin((prev) => !prev)} className='py-2 px-4 rounded shadow bg-orange-300 hover:shadow-black hover:bg-blue-100'>{showLogin ? 'Close' : 'Join us'}</button>
         }
-        <div id="dropdownHover" className="w-20 h-20 hidden bg-red-500 top-[calc(100%+0.5rem)] right-2">
-
-        </div>
       </nav>
-      {
-        user ? <h1 className="text-3xl font-bold underline">
-          Hello world!
-        </h1> : showLogin ? <AuthenticationView authenticationSuccessful={loginResponse => setUser(() => loginResponse)} /> : <h1 className="text-3xl font-bold underline">
-          Please Login
-        </h1>
-      }
-    </>
+      <div className='flex-1 overflow-scroll'>
+        {
+          user ? <h1 className="text-3xl font-bold underline">
+            Hello world!
+          </h1> : showLogin ? <AuthenticationView authenticationSuccessful={loginResponse => setUser(() => loginResponse)} /> : <h1 className="text-3xl font-bold underline">
+            Please Login
+          </h1>
+        }
+      </div>
+    </div>
   )
 }
 
