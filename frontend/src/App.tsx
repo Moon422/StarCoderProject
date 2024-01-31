@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { LoginResponse } from './model'
 import logo from './assets/images/logo.png'
 import mugshot from './assets/images/mugshot.png'
@@ -10,8 +10,24 @@ function App() {
   const [showLogin, setShowLogin] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
 
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/Auth/refresh`, {
+      credentials: 'include',
+      method: 'GET'
+    }).then(
+      response => response.json(),
+      reason => console.log(reason)
+    ).then(
+      response => setUser(() => response),
+      reason => console.log(reason)
+    )
+  }, [])
+
   const logout = () => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+      credentials: 'include',
+      method: 'GET'
+    })
       .then(() => setUser(null))
   }
 
