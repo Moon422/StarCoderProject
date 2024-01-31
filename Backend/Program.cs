@@ -25,7 +25,8 @@ public class Program
             options.AddPolicy(name: MyAllowSpecificOrigins,
                             policy =>
                             {
-                                policy.WithOrigins("*")
+                                policy.WithOrigins("http://localhost:5173")
+                                    .AllowCredentials()
                                     .AllowAnyMethod()
                                     .AllowAnyHeader();
                             });
