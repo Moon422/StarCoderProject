@@ -18,13 +18,11 @@ export interface ReadTask {
 export interface CreateTask {
     title: string,
     description: string,
-    profileId: number,
 }
 
 export interface UpdateTask {
     title: string,
     description: string,
-    profileId: number,
     taskStatus: TaskStatus,
 }
 

@@ -3,6 +3,7 @@ import { LoginResponse } from './model'
 import logo from './assets/images/logo.png'
 import mugshot from './assets/images/mugshot.png'
 import { AuthenticationView } from './components/authentication'
+import { Dashboard } from './components/dashboard'
 
 function App() {
   const [user, setUser] = useState<LoginResponse | null>(null)
@@ -10,7 +11,7 @@ function App() {
   const [showDropdown, setShowDropdown] = useState(false)
 
   const logout = () => {
-    fetch('http://localhost:5057/api/auth/logout')
+    fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`)
       .then(() => setUser(null))
   }
 
@@ -34,9 +35,7 @@ function App() {
       </nav>
       <div className='flex-1 overflow-scroll'>
         {
-          user ? <h1 className="text-3xl font-bold underline">
-            Hello world!
-          </h1> : showLogin ? <AuthenticationView authenticationSuccessful={loginResponse => setUser(() => loginResponse)} /> : <h1 className="text-3xl font-bold underline">
+          user ? <Dashboard user={user} /> : showLogin ? <AuthenticationView authenticationSuccessful={loginResponse => setUser(() => loginResponse)} /> : <h1 className="text-3xl font-bold underline">
             Please Login
           </h1>
         }
