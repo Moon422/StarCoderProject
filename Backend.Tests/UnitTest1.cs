@@ -1,14 +1,13 @@
 using System.Net;
 using System.Net.Http.Json;
-using Backend.Dtos;
-using Microsoft.AspNetCore.Http;
+using Backend.Tests.Dtos;
 
 namespace Backend.Tests;
 
 public class UnitTest1
 {
     [Fact]
-    public async void Test1() // succesful user account creation
+    public async Task Test1() // succesful user account creation
     {
         HttpClient httpClient = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5057/api/register")
@@ -160,6 +159,6 @@ public class UnitTest1
         Assert.Equal(readTaskDto.ProfileId, loginResponse.ProfileId);
         Assert.Equal(readTaskDto.Title, createTaskPayload.Title);
         Assert.Equal(readTaskDto.Description, createTaskPayload.Description);
-        Assert.Equal(Models.TaskStatus.INCOMPLETE, readTaskDto.TaskStatus);
+        Assert.Equal(Dtos.TaskStatus.INCOMPLETE, readTaskDto.TaskStatus);
     }
 }
