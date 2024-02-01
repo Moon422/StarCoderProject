@@ -2,6 +2,9 @@
 
 Welcome to the Brainstation Starcoder-24 demo project github repository. Here, I am going to explain the codebase, how setup and run.
 
+Screenshots can be found in the Screenshots folder.
+[Screenshots](https://github.com/Moon422/StarCoderProject/tree/main/Screenshots)
+
 This is a task management web application, where uses can register and login to their individual accounts to read, create, update and delete their tasks. For the backend, I have used ASP.NET Core Web API, Postgresql database and Entity Framework ORM to read, create, update or delete data in the database. For the frontend, I have used ReactJS and Tailwind CSS. Here is complete list of the tech stack, I have used.
 
 |     |     |
