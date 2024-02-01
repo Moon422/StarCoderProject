@@ -33,11 +33,11 @@ public class PasswordValidatorAttribute : ValidationAttribute
 
         if (password.Length < minLength)
         {
-            return new ValidationResult($"Password length must be less than {minLength} characters");
+            return new ValidationResult($"Password length must be greater than {minLength} characters");
         }
         else if (password.Length > maxLength)
         {
-            return new ValidationResult($"Password length must be greater than {maxLength} characters");
+            return new ValidationResult($"Password length must be less than {maxLength} characters");
         }
         else if (digit && !new Regex(digitPattern).IsMatch(password))
         {
