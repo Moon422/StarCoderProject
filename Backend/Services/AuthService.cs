@@ -16,6 +16,7 @@ namespace Backend.Services;
 
 public interface IAuthService
 {
+    Task<LoginResponseDto> CreateAdminUser(RegistrationDto registration);
     Task<LoginResponseDto> Register(RegistrationDto registration);
     Task<LoginResponseDto> Login(LoginCredentialsDto loginCredentials);
     Task<LoginResponseDto> RefreshToken();
@@ -72,6 +73,66 @@ public class AuthService : IAuthService
         await dbcontext.SaveChangesAsync(true);
 
         return refreshToken;
+    }
+
+    public async Task<LoginResponseDto> CreateAdminUser(RegistrationDto registration)
+    {
+        if ((await dbcontext.Users.FirstOrDefaultAsync(u => u.Username == registration.Username)) is User)
+        {
+            throw new InvalidOperationException($"Profile with username {registration.Username} already exists.");
+        }
+
+        if ((await dbcontext.Profiles.FirstOrDefaultAsync(p => p.Email == registration.Email)) is Profile)
+        {
+            throw new InvalidOperationException($"Profile with email {registration.Email} already exists.");
+        }
+
+        var currentDateTime = DateTime.UtcNow;
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(registration.Password);
+
+        User user = new User()
+        {
+            Username = registration.Username,
+            Password = hashedPassword,
+            CreationTime = currentDateTime,
+            UpdateTime = currentDateTime,
+        };
+
+        Profile profile = new Profile()
+        {
+            Firstname = registration.FirstName,
+            Lastname = registration.Lastname,
+            Email = registration.Email,
+            User = user,
+            ProfileType = ProfileTypes.ADMIN,
+            CreationTime = currentDateTime,
+            UpdateTime = currentDateTime,
+        };
+
+        await dbcontext.Users.AddAsync(user);
+        await dbcontext.Profiles.AddAsync(profile);
+        await dbcontext.SaveChangesAsync();
+
+        var refreshToken = await GenerateRefreshToken(user);
+        httpContextAccessor.HttpContext!.Response.Cookies.Append(
+            "refresh-token",
+            refreshToken.Token,
+            new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTimeOffset.UtcNow.AddDays(7)
+            }
+        );
+
+        return new LoginResponseDto()
+        {
+            ProfileId = profile.Id,
+            Firstname = profile.Firstname,
+            Lastname = profile.Lastname,
+            Email = profile.Email,
+            ProfileType = profile.ProfileType,
+            JwtToken = CreateToken(user, profile)
+        };
     }
 
     public async Task<LoginResponseDto> Register(RegistrationDto registration)

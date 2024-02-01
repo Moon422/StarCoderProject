@@ -19,6 +19,24 @@ public class AuthController : ControllerBase
         this.authService = authService;
     }
 
+    [HttpPost("register/admin")]
+    public async Task<IActionResult> CreateAdminUser([FromBody] RegistrationDto registration)
+    {
+        try
+        {
+            var loginResponse = await authService.Register(registration);
+            return Ok(loginResponse);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong. Please try againg");
+        }
+    }
+
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegistrationDto registration)
     {
