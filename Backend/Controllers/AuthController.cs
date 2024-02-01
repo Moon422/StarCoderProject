@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     {
         try
         {
-            var loginResponse = await authService.Register(registration);
+            var loginResponse = await authService.CreateAdminUser(registration);
             return Ok(loginResponse);
         }
         catch (InvalidOperationException ex)
