@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Backend.Dtos;
 using Backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -72,7 +73,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    [HttpGet("[controller]/logout")]
+    [HttpGet("[controller]/logout"), Authorize]
     public async Task<IActionResult> Logout()
     {
         try
