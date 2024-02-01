@@ -23,7 +23,7 @@ This is a task management web application, where uses can register and login to 
 
 Here is the directory structure for the project to help the viewer navigate through the project:
 
-- **StarCoderProject** (Root Directory)  
+- **StarCoderProject** (Root Directory)
     - **Backend.Tests** (XUnit Test Project)
         - **Backend.Tests.csproj** (CS Project File for Backend.Test Project)
         - **UnitTest1.cs** (Contains Testcases)
@@ -33,7 +33,7 @@ Here is the directory structure for the project to help the viewer navigate thro
             - **AuthController.cs**
             - **TaskController.cs**
             - **WeatherForecastController.cs** (Optional, not necessary)
-        - **Dtos** (Contains Data Transfer Object Classes)  
+        - **Dtos** (Contains Data Transfer Object Classes)
             - **LoginCredentialsDto.cs**
             - **LoginResponseDto.cs**
             - **RegistrationDto.cs**
@@ -51,7 +51,7 @@ Here is the directory structure for the project to help the viewer navigate thro
             - **AuthService.cs** (Contains Service for Authentication)
             - **StarDB.cs** (Contains StarDB DbContext Class)
             - **TaskService.cs** (Contains Service for Task Management)
-        - **Validators**  
+        - **Validators**
             - **PasswordValidatorAttribute.cs** (Contains PasswordValidatorAttribute Class for Validating Password Field in DTO Classes)
         - **Backend.csproj** (CS Project for Backend)
         - **Program.cs** (Entry Point for the Project)
@@ -62,7 +62,7 @@ Here is the directory structure for the project to help the viewer navigate thro
         - **public**
         - **src** (Contains Source Codes)
             - **asset** (Contains Images and Other Assets)
-            - **components** (Contains tsx Files for Different Components)  
+            - **components** (Contains tsx Files for Different Components)
                 - **authentication.tsx** (Contains AuthenticationView, Login and Register Components)
                 - **dashboard.tsx** (Contains Dashboard Component)
                 - **task.tsx** (Contains TaskListItem Component)
@@ -90,8 +90,10 @@ This section contains the list of Rest API endpoint and payload structure for ea
 
 - ******Admin Registration Endpoint (Only Included for Testing Purpose, Can be Accessed through Swagger)******
     - **URL:** `/api/register/admin`
+        
     - **Method:** `POST`
-    - **Payload:** 
+        
+    - **Payload:**
         
         ```
         {
@@ -104,10 +106,13 @@ This section contains the list of Rest API endpoint and payload structure for ea
         ```
         
     - **Authentication Necessary:** No
+        
 - **Registration Endpoint**
     - **URL:** `/api/register`
+        
     - **Method:** `POST`
-    - **Payload:** 
+        
+    - **Payload:**
         
         ```json
         {
@@ -120,10 +125,13 @@ This section contains the list of Rest API endpoint and payload structure for ea
         ```
         
     - **Authentication Necessary:** No
-- **Login Endpoint**  
+        
+- **Login Endpoint**
     - **URL:** `/api/login`
+        
     - **Method:** `POST`
-    - **Payload:** 
+        
+    - **Payload:**
         
         ```json
         {
@@ -133,12 +141,13 @@ This section contains the list of Rest API endpoint and payload structure for ea
         ```
         
     - **Authentication Necessary:** No
-- **Refresh Token Endpoint**  
+        
+- **Refresh Token Endpoint**
     - **URL:** `/api/auth/refresh`
     - **Method:** `GET`
     - **Payload:** No Payload
     - **Authentication Necessary:** No
-- **Logout Endpoint**  
+- **Logout Endpoint**
     - **URL:** `/api/auth/logout`
     - **Method:** `GET`
     - **Payload:** No Payload
@@ -153,8 +162,10 @@ This section contains the list of Rest API endpoint and payload structure for ea
     - **Authentication Necessary:** Yes (As user, only the tasks created by the user will retrieved and as an admin, all the tasks created by all the users will be retrieved)
 - **Task Creation**
     - **URL:** `/api/tasks`
+        
     - **Method:** `POST`
-    - **Payload:** 
+        
+    - **Payload:**
         
         ```json
         {
@@ -164,10 +175,13 @@ This section contains the list of Rest API endpoint and payload structure for ea
         ```
         
     - **Authentication Necessary:** Yes (as user; admin users cannot create tasks)
+        
 - **Task Update**
     - **URL:** `/api/tasks/{taskId}`
+        
     - **Method:** `PUT`
-    - **Payload:** 
+        
+    - **Payload:**
         
         ```json
         {
@@ -178,8 +192,22 @@ This section contains the list of Rest API endpoint and payload structure for ea
         ```
         
     - **Authentication Necessary:** Yes (Users can only update the task they created and admins can update any task)
+        
 - **Task Deletion**
     - **URL:** `/api/tasks/{taskId}`
     - **Method:** `DELETE`
     - **Payload:** No Payload
     - ****Authentication Necessary:**** Yes (Users can only delete the task they created and admins can delete any task)
+
+&nbsp;
+
+# Setup Instruction
+
+For this project, I have used Dotnet Core 7, Nodejs 18.17.1 and Postgresql 14.10. Versions less then the specified ones might not work as it is supposed to work. Now, follow the instructions down below to setup and run the project.
+
+- Database. Create user in postgresql with name `starcoder` and password `starcoder`. Then create database named `star_db` and grant all access the `starcoder` user. Make sure the database is running in localhost. If you have any other configuration as specified, you might want change the connection string inside ASP.NET Core Web API project (StarCoderProject/Backend/appsettings.json). Current connection string is the following: `"Host=localhost; Database=star_db; Username=starcoder; Password=starcoder;"`.
+- Now, open a command prompt or terminal and navigate the StarCoderProject root directory. Then, run `dotnet restore` to install all the dependencies required for dependencies for the Backend API project and the XUnit Test project.
+- Now, run the database migrations. I have used Entity Framework CLI tool to `dotnet ef` to create and run migrations.
+- After running the migrations, the server can be initiated. To run the server, navigate to the StarCoderProject/Backend directory from terminal and run `dotnet run` command. This will run the server in localhost, port 5057. The port number is important, as the frontend app makes all the fetch request to `http://localhost:5057`. If the backend project runs in a different port, then the api url needs to be updated in StarCoderProject/frontend/.env file.
+- Now, you can run the test project. Since, the test cases were written to make http requests to the backend, so, new entries will populate in the database. It would ideal if you run the test case while the database tables are empty.
+- Now, you can start the frontend application. Navigate to the StarCoderProject/frontend and install the dependencies by running `npm install`. To start the project, run `npm run dev`. Make sure the backend project is running and is running in port 5057. If the backend is running in a different port then update the `VITE_API_URL` variable. By default, the value should as the following: `VITE_API_URL="http://localhost:5057"`.
