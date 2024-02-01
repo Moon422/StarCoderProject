@@ -8,7 +8,7 @@ namespace Backend.Tests;
 public class UnitTest1
 {
     [Fact]
-    public async void Test1()
+    public async void Test1() // succesful user account creation
     {
         HttpClient httpClient = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5057/api/register")
@@ -31,7 +31,7 @@ public class UnitTest1
     }
 
     [Fact]
-    public async Task Test2()
+    public async Task Test2() // attempt to create user with username that exists, server should return bad request response
     {
         var payload = new RegistrationDto()
         {
@@ -56,7 +56,7 @@ public class UnitTest1
     }
 
     [Fact]
-    public async Task Test3()
+    public async Task Test3() // successful login request
     {
         var payload = new LoginCredentialsDto()
         {
@@ -78,7 +78,7 @@ public class UnitTest1
     }
 
     [Fact]
-    public async Task Test4()
+    public async Task Test4() // attempt to login with username that does not exist, server should return bad request response
     {
         var payload = new LoginCredentialsDto()
         {
@@ -100,7 +100,7 @@ public class UnitTest1
     }
 
     [Fact]
-    public async Task Test5()
+    public async Task Test5() // attempt to login with invalid password, server should return bad request response
     {
         var payload = new LoginCredentialsDto()
         {
@@ -122,7 +122,7 @@ public class UnitTest1
     }
 
     [Fact]
-    public async Task Test6()
+    public async Task Test6() // successful task creation
     {
         var loginPayload = new LoginCredentialsDto()
         {
