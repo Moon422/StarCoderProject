@@ -1,8 +1,8 @@
-Readme
-
 # Brainstation Starcoder-24 Demo Project
 
 Welcome to the Brainstation Starcoder-24 demo project github repository. Here, I am going to explain the codebase, how setup and run.
+
+[Screenshots](https://github.com/Moon422/StarCoderProject/tree/main/Screenshots)
 
 This is a task management web application, where uses can register and login to their individual accounts to read, create, update and delete their tasks. For the backend, I have used ASP.NET Core Web API, Postgresql database and Entity Framework ORM to read, create, update or delete data in the database. For the frontend, I have used ReactJS and Tailwind CSS. Here is complete list of the tech stack, I have used.
 
@@ -89,6 +89,7 @@ This section contains the list of Rest API endpoint and payload structure for ea
 ## Authentication
 
 - ******Admin Registration Endpoint (Only Included for Testing Purpose, Can be Accessed through Swagger)******
+    
     - **URL:** `/api/register/admin`
         
     - **Method:** `POST`
@@ -108,6 +109,7 @@ This section contains the list of Rest API endpoint and payload structure for ea
     - **Authentication Necessary:** No
         
 - **Registration Endpoint**
+    
     - **URL:** `/api/register`
         
     - **Method:** `POST`
@@ -127,6 +129,7 @@ This section contains the list of Rest API endpoint and payload structure for ea
     - **Authentication Necessary:** No
         
 - **Login Endpoint**
+    
     - **URL:** `/api/login`
         
     - **Method:** `POST`
@@ -143,11 +146,13 @@ This section contains the list of Rest API endpoint and payload structure for ea
     - **Authentication Necessary:** No
         
 - **Refresh Token Endpoint**
+    
     - **URL:** `/api/auth/refresh`
     - **Method:** `GET`
     - **Payload:** No Payload
     - **Authentication Necessary:** No
 - **Logout Endpoint**
+    
     - **URL:** `/api/auth/logout`
     - **Method:** `GET`
     - **Payload:** No Payload
@@ -156,11 +161,13 @@ This section contains the list of Rest API endpoint and payload structure for ea
 ## Task Management
 
 - **Task Retrieval**
+    
     - **URL:** `/api/tasks`
     - **Method:** `GET`
     - **Payload:** No Payload
     - **Authentication Necessary:** Yes (As user, only the tasks created by the user will retrieved and as an admin, all the tasks created by all the users will be retrieved)
 - **Task Creation**
+    
     - **URL:** `/api/tasks`
         
     - **Method:** `POST`
@@ -177,6 +184,7 @@ This section contains the list of Rest API endpoint and payload structure for ea
     - **Authentication Necessary:** Yes (as user; admin users cannot create tasks)
         
 - **Task Update**
+    
     - **URL:** `/api/tasks/{taskId}`
         
     - **Method:** `PUT`
@@ -194,6 +202,7 @@ This section contains the list of Rest API endpoint and payload structure for ea
     - **Authentication Necessary:** Yes (Users can only update the task they created and admins can update any task)
         
 - **Task Deletion**
+    
     - **URL:** `/api/tasks/{taskId}`
     - **Method:** `DELETE`
     - **Payload:** No Payload
